@@ -1,0 +1,209 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('your-quiz-background.jpg'); /* クイズ用の背景 */
+    background-size: cover;
+    background-position: center;
+}
+
+#startScreen {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.9); /* 背景の透過を少し強く */
+    padding: 30px; /* paddingを増やす */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* ボックスシャドウを追加 */
+}
+
+#title {
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.15); /* 影を白で15%不透明に */
+}
+
+button {
+    padding: 20px 50px;
+    font-size: 26px;
+    background-color: white; /* ボタンの背景を白に */
+    color: black; /* ボタンの文字を黒に */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* ボタンに影を追加 */
+    margin-top: 60px; /* ボタンを下に60px配置 */
+}
+
+button:hover {
+    background-color: #f0f0f0; /* ホバー時の色 */
+    transform: scale(1.05);
+}
+
+#quiz {
+    margin-bottom: 40px;
+    display: none; /* 初期状態では非表示 */
+}
+
+.question {
+    font-size: 44px; /* 元のサイズから20px大きくする */
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.15); /* 影を追加 */
+}
+
+.answers {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.answer {
+    width: 180px;
+    height: 180px;
+    margin: 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.5); /* 半透明の白 */
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.2); /* 半透明の白 */
+    color: black; /* 文字色を黒に */
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1.5;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.22); /* デフォルトの影 */
+}
+
+.answer.correct {
+    background-color: rgba(76, 175, 80, 0.7); /* 正解の背景色 */
+}
+
+.answer.wrong {
+    background-color: rgba(244, 67, 54, 0.7); /* 不正解の背景色 */
+}
+
+.answer.selected {
+    background-color: rgba(255, 255, 255, 0.7); /* 選択時の不透明度70% */
+}
+
+.answer.hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* ホバー時の影を黒に */
+    transform: scale(1.1); /* 少し大きくなるアニメーション */
+}
+
+.answer:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* ホバー時の影を70% */
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 0 10px #4caf50; }
+    100% { box-shadow: 0 0 20px #4caf50; }
+}
+
+/* カーテンのアニメーション */
+.curtain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    animation: curtainDown 0.5s forwards; /* 上から下に */
+}
+
+@keyframes curtainDown {
+    from { top: -100%; }
+    to { top: 0; }
+}
+
+.curtainUp {
+    animation: curtainUp 0.5s forwards; /* 下から上に */
+}
+
+@keyframes curtainUp {
+    from { top: 0; }
+    to { top: -100%; }
+}
+
+.score {
+    font-size: 28px;
+    margin-top: 20px;
+}
+
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+}
+
+.fade-in.show {
+    opacity: 1;
+}
+
+.slide-in {
+    transform: translateY(-50px);
+    opacity: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.slide-in.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+#fullScreenImage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 20;
+    display: none; /* 初期は非表示 */
+}
+
+.blink {
+    animation: blink 0.5s linear infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+/* 揺れアニメーション */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-10px); }
+    100% { transform: translateX(0); }
+}
+
+/* 既存のスタイルの後に追加 */
+@keyframes closeScreen {
+    0% {
+        transform: scaleY(1);
+    }
+    50% {
+        transform: scaleY(1);
+    }
+    100% {
+        transform: scaleY(0);
+        transform-origin: top; /* 上から閉じる */
+    }
+}
