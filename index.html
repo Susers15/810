@@ -79,6 +79,9 @@
                     fullScreenImage.style.height = '100%';
                     fullScreenImage.style.zIndex = '1000';
                     document.body.appendChild(fullScreenImage);
+
+                     // ページが開いたときに810.wavを再生
+    document.getElementById('startSound').play();
                     
                     setTimeout(() => {
                         fullScreenImage.remove();
