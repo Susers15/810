@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>オナチンコ‼️！</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<script>    window.addEventListener('beforeunload', (event) => {
+    event.preventDefault(); 
+    event.returnValue = "何で消そうとするの❓嫌いなの❓"; 
+});</script>
+    <div id="startScreen">
+        <h1 id="title">クンニチンコ‼️</h1>
+        <button id="startButton">イク‼️😍🥰</button>
+    </div>
+    <div id="quiz" style="display: none;"></div>
+    <button id="next" style="display: none;">次の問題へイク‼️</button>
+    <div id="score" class="score"></div>
+    <audio id="correctSound" src="correct.mp3" preload="auto"></audio>
+    <audio id="wrongSound" src="wrong.mp3" preload="auto"></audio>
+    <audio id="finalSound" src="pinis.wav" preload="auto"></audio>
+    <audio id="finalPerfectSound" src="4545.wav" preload="auto"></audio>
+    <audio id="hoverSound" src="hover.mp3" preload="auto"></audio>
+    <audio id="startSound" src="810.wav" preload="auto"></audio>
+    </script>
+    <script>
+        const quizData = [
+            {
+                question: "愛成はなんて読みますか❓",
+                answers: ["ケツ穴", "あいナリ", "穴", "肉棒"],
+                correct: 0
+            },
+            {
+                question: "世歩玲の意味は❓",
+                answers: ["セックスフレンド", "男根の射精", "穴", "生濡れアナルセックス"],
+                correct: 0
+            },
+            {
+                question: "チンコの平均の大きさを答えなさい",
+                answers: ["太さがほシい‼️", "キノコ⁉️", "ウンコ‼️", "マンコ‼️"],
+                correct: 0
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const curtain = document.createElement('div');
+            curtain.classList.add('curtain');
+            document.body.appendChild(curtain);
+
+            document.getElementById('startSound').play();
+
+            let imgCount = 0;
+            const showImageInterval = setInterval(() => {
+                if (imgCount < 5) {
+                    const fullScreenImage = document.createElement('img');
+                    fullScreenImage.src = '114514.jpg';
+                    fullScreenImage.style.position = 'fixed';
+                    fullScreenImage.style.top = '0';
+                    fullScreenImage.style.left = '0';
+                    fullScreenImage.style.width = '100%';
+                    fullScreenImage.style.height = '100%';
+                    fullScreenImage.style.zIndex = '1000';
+                    document.body.appendChild(fullScreenImage);
+                    
+                    setTimeout(() => {
+                        fullScreenImage.remove();
+                    }, 1000);
+                    imgCount++;
+                } else {
+                    clearInterval(showImageInterval);
+                }
+            }, 200);
+
+            setTimeout(() => {
+                curtain.remove();
+                document.getElementById('startScreen').style.display = 'block';
+            }, 500);
+        });
+
+        document.getElementById('startButton').onclick = () => {
+            const startScreen = document.getElementById('startScreen');
+            const curtain = document.createElement('div');
+            curtain.classList.add('curtain');
+            document.body.appendChild(curtain);
+
+            document.getElementById('finalSound').play();
+            const fullScreenImage = document.createElement('img');
+            fullScreenImage.src = '114514.jpg';
+            fullScreenImage.style.position = 'fixed';
+            fullScreenImage.style.top = '0';
+            fullScreenImage.style.left = '0';
+            fullScreenImage.style.width = '100%';
+            fullScreenImage.style.height = '100%';
+            fullScreenImage.style.zIndex = '1000';
+            document.body.appendChild(fullScreenImage);
+
+            setTimeout(() => {
+                fullScreenImage.remove();
+                setTimeout(() => {
+                    startScreen.style.display = 'none';
+                    curtain.classList.add('curtainUp');
+                    setTimeout(() => {
+                        document.getElementById('quiz').style.display = 'block';
+                        loadQuestion();
+                        curtain.remove();
+                    }, 500);
+                }, 1000);
+            }, 0);
+        };
+
+        function loadQuestion() {
+            const quizContainer = document.getElementById('quiz');
+            quizContainer.innerHTML = '';
+
+            const currentQuestion = quizData[currentQuestionIndex];
+
+            const questionElement = document.createElement('h2');
+            questionElement.classList.add('question', 'fade-in');
+            questionElement.textContent = currentQuestion.question;
+            quizContainer.appendChild(questionElement);
+
+            const answersContainer = document.createElement('div');
+            answersContainer.classList.add('answers');
+
+            currentQuestion.answers.forEach((answer, index) => {
+                const answerButton = document.createElement('div');
+                answerButton.textContent = answer;
+                answerButton.classList.add('answer');
+                answerButton.onclick = () => selectAnswer(index);
+                
+                answerButton.onmouseenter = () => {
+                    document.getElementById('hoverSound').play();
+                    answerButton.classList.add('hover');
+                };
+                answerButton.onmouseleave = () => {
+                    answerButton.classList.remove('hover');
+                };
+
+                answersContainer.appendChild(answerButton);
+            });
+
+            quizContainer.appendChild(answersContainer);
+
+            setTimeout(() => {
+                questionElement.classList.add('show');
+            }, 10);
+        }
+
+        function selectAnswer(index) {
+            const currentQuestion = quizData[currentQuestionIndex];
+            const answerElements = document.querySelectorAll('.answer');
+
+            answerElements.forEach((element, i) => {
+                if (i === currentQuestion.correct) {
+                    element.classList.add('correct');
+                } else {
+                    element.classList.add('wrong');
+                    element.style.animation = 'shake 0.7s';
+                }
+                element.onclick = null;
+            });
+
+            if (index === currentQuestion.correct) {
+                score++;
+                document.getElementById('correctSound').play();
+            } else {
+                document.getElementById('wrongSound').play();
+                
+                // 不正解の場合の処理
+                const fullScreenImage = document.createElement('img');
+                fullScreenImage.src = '114514.jpg';
+                fullScreenImage.style.position = 'fixed';
+                fullScreenImage.style.top = '0';
+                fullScreenImage.style.left = '0';
+                fullScreenImage.style.width = '100%';
+                fullScreenImage.style.height = '100%';
+                fullScreenImage.style.zIndex = '1000';
+                document.body.appendChild(fullScreenImage);
+
+                // 画像をクリックした時の処理
+                fullScreenImage.onclick = () => {
+                    fullScreenImage.remove();
+                    document.getElementById('finalSound').play();
+                };
+
+                setTimeout(() => {
+                    fullScreenImage.remove();
+                }, 3000);
+            }
+
+            document.getElementById('next').style.display = 'block';
+        }
+
+        document.getElementById('next').onclick = () => {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                const curtain = document.createElement('div');
+                curtain.classList.add('curtain');
+                document.body.appendChild(curtain);
+                
+                curtain.classList.add('curtainUp');
+                setTimeout(() => {
+                    curtain.remove();
+                    loadQuestion();
+                    document.getElementById('next').style.display = 'none';
+                }, 500);
+            } else {
+                showScore();
+            }
+        }
+
+        function showScore() {
+            const quizContainer = document.getElementById('quiz');
+            quizContainer.innerHTML = '';
+            document.getElementById('next').style.display = 'none';
+            document.getElementById('title').style.display = 'none';
+
+            const scoreMessage = score === quizData.length ? "満点おめでとう！" : "よくがんばりました！";
+            const scoreElement = document.createElement('h2');
+            scoreElement.className = 'score-message';
+            scoreElement.textContent = scoreMessage;
+
+            const scoreValue = document.createElement('h1');
+            scoreValue.className = 'score-value';
+            scoreValue.textContent = `あなたのスコアは ${score} 点 です！`;
+
+            quizContainer.appendChild(scoreElement);
+            quizContainer.appendChild(scoreValue);
+
+            // 満点の場合の処理
+            if (score === quizData.length) {
+                document.getElementById('finalPerfectSound').play();
+            } else {
+                const fullScreenImage = document.createElement('img');
+                fullScreenImage.src = 'your-image.jpg'; // ここは変更なし
+                fullScreenImage.style.position = 'fixed';
+                fullScreenImage.style.top = '0';
+                fullScreenImage.style.left = '0';
+                fullScreenImage.style.width = '100%';
+                fullScreenImage.style.height = '100%';
+                fullScreenImage.style.zIndex = '1000';
+                document.body.appendChild(fullScreenImage);
+
+                // 画像をクリックした時の処理
+                fullScreenImage.onclick = () => {
+                    fullScreenImage.style.display = 'none'; // 一旦非表示にする
+
+                    // すぐに再表示
+                    setTimeout(() => {
+                        fullScreenImage.style.display = 'block'; // 再表示
+                    }, 100); // 100ミリ秒後に表示
+
+                    document.getElementById('finalSound').play(); // mac.wav を繰り返し再生
+                };
+
+                // mac.wav を繰り返し再生
+                const macSound = document.getElementById('finalSound');
+                macSound.src = 'mac.wav'; // 音声ファイル名を変更
+                macSound.loop = true; // ループ設定
+                macSound.play();
+
+                // 画像は何度も表示可能
+                fullScreenImage.style.cursor = 'pointer'; // クリック可能なカーソルを表示
+            }
+        }
+        
+        
+    // 既存のコード...
+
+
+
+    // 残りの既存のコード...
+</script>
+
+    </script>
+</body>
+</html>
