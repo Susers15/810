@@ -13,6 +13,57 @@ body {
     background-image: url('your-quiz-background.jpg'); /* クイズ用の背景 */
     background-size: cover;
     background-position: center;
+    position: relative; /* 親要素にrelativeを設定 */
+}
+
+@media (prefers-color-scheme: dark) {
+    body::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.2); /* 不透明度20%の黒い背景 */
+        
+    }
+}
+
+/* ボタンとその他の要素のスタイル */
+#startScreen,
+button,
+.answer {
+    z-index: 2; /* ボタンを上に表示 */
+}
+
+/* その他のCSSはそのまま保持 */
+
+
+
+
+
+/* その他のCSSはそのまま保持 */
+#startScreen {
+    z-index: 2; /* 上に表示されるように */
+}
+
+/* ここに他の要素のCSSが続く... */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('your-quiz-background.jpg'); /* クイズ用の背景 */
+    background-size: cover;
+    background-position: center;
 }
 
 #startScreen {
@@ -89,11 +140,11 @@ button:hover {
 }
 
 .answer.correct {
-    background-color: rgba(76, 175, 80, 0.7); /* 正解の背景色 */
+    background-color: rgba(76, 175, 132, 0.484); /* 正解の背景色 */
 }
 
 .answer.wrong {
-    background-color: rgba(244, 67, 54, 0.7); /* 不正解の背景色 */
+    background-color: rgba(244, 54, 193, 0.52); /* 不正解の背景色 */
 }
 
 .answer.selected {
@@ -110,7 +161,7 @@ button:hover {
 }
 
 @keyframes glow {
-    0% { box-shadow: 0 0 10px #4caf50; }
+    0% { box-shadow: 0 0 10px #4caf4fa7; }
     100% { box-shadow: 0 0 20px #4caf50; }
 }
 
@@ -205,5 +256,142 @@ button:hover {
     100% {
         transform: scaleY(0);
         transform-origin: top; /* 上から閉じる */
+    }
+}
+
+button {
+    padding: 20px 50px;
+    font-size: 26px;
+    background-color: white; /* ボタンの背景を白に */
+    color: black; /* ボタンの文字を黒に */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* ボタンに影を追加 */
+    margin-top: 60px; /* ボタンを下に60px配置 */
+}
+
+@media (prefers-color-scheme: dark) {
+    button {
+        background-color: rgba(0, 0, 0, 0.7); /* ダークモード時の背景色 */
+        color: white; /* ダークモード時の文字色 */
+        box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3); /* 影を白に変更 */
+    }
+
+    button:hover {
+        background-color: rgba(255, 255, 255, 0.2); /* ダークモード時のホバー色 */
+    }
+}
+.answer {
+    width: 180px;
+    height: 180px;
+    margin: 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.5); /* ライトモードの半透明の白 */
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.2); /* ライトモードの半透明の白 */
+    color: black; /* ライトモードの文字色 */
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1.5;
+    transition: box-shadow 0.3s ease, transform 0.3s ease, border 0.3s ease;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.22); /* デフォルトの影 */
+}
+
+@media (prefers-color-scheme: dark) {
+    .answer {
+        border: 1px solid rgba(0, 0, 0, 0.36); /* 不透明度36%の黒枠 */
+        background-color: rgba(0, 0, 0, 0.7); /* ダークモード時の背景色 */
+        color: white; /* ダークモード時の文字色 */
+    }
+
+    .answer:hover {
+        border: 1px solid rgba(0, 0, 0, 0.55); /* カーソルを合わせたときの枠 */
+    }
+
+    .answer.selected {
+        background-color: rgba(255, 255, 255, 0.2); /* 選択時の背景色（ダークモード） */
+    }
+
+    .answer.correct {
+        background-color: rgba(76, 175, 80, 0.7); /* 正解の背景色 */
+    }
+
+    .answer.wrong {
+        background-color: rgba(195, 51, 92, 0.47); /* 不正解の背景色 */
+    }
+}
+
+
+button {
+    padding: 20px 50px;
+    font-size: 26px;
+    background-color: white; /* ボタンの背景を白に */
+    color: black; /* ボタンの文字を黒に */
+    border: none; /* 初期は枠なし */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, border 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* ボタンに影を追加 */
+    margin-top: 60px; /* ボタンを下に60px配置 */
+}
+
+button:hover {
+    background-color: #f0f0f0; /* ホバー時の色 */
+}
+
+@media (prefers-color-scheme: dark) {
+    button {
+        background-color: rgba(0, 0, 0, 0.7); /* ダークモード時の背景色 */
+        color: white; /* ダークモード時の文字色 */
+        box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3); /* 影を白に変更 */
+        border: 1px solid rgba(0, 0, 0, 0); /* 初期は透明な枠 */
+    }
+
+    button:hover {
+        background-color: black; /* ボタンの背景を黒に */
+        color: white; /* 文字色を白に */
+        border: 1px solid rgba(0, 0, 0, 0.55); /* カーソルを合わせた際の黒い不透明度55%の枠 */
+    }
+}
+
+.answer {
+    width: 180px;
+    height: 180px;
+    margin: 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.5); /* ライトモードの半透明の白 */
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.2); /* ライトモードの半透明の白 */
+    color: black; /* ライトモードの文字色 */
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1.5;
+    transition: box-shadow 0.3s ease, transform 0.3s ease, border 0.3s ease;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.22); /* デフォルトの影 */
+}
+
+.answer:hover {
+    border: 1px solid rgba(0, 0, 0, 0); /* ライトモードでは枠なし */
+}
+
+@media (prefers-color-scheme: dark) {
+    .answer {
+        border: 1px solid rgba(0, 0, 0, 0.277); /* 不透明度36%の黒枠 */
+        background-color: rgba(0, 0, 0, 0.6); /* ダークモード時の背景色 */
+        color: white; /* ダークモード時の文字色 */
+    }
+
+    .answer:hover {
+        border: 1px solid rgba(0, 0, 0, 0.55); /* カーソルを合わせたときの黒い不透明度55%の枠 */
     }
 }
