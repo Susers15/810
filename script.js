@@ -19,44 +19,18 @@ const quizData = [
 let currentQuestionIndex = 0;
 let score = 0;
 
-document.addEventListener('DOMContentLoaded', () => {
-    const curtain = document.createElement('div');
-    curtain.classList.add('curtain');
-    document.body.appendChild(curtain);
+let macAudio = new Audio('mac.wav'); // mac.wavの音声オブジェクト
 
-    // ページが開いたときに810.wavを再生
-    document.getElementById('startSound').play();
+window.onload = () => {
 
-    // 画像表示の処理
-    let imgCount = 0;
-    const showImageInterval = setInterval(() => {
-        if (imgCount < 5) {
-            const fullScreenImage = document.createElement('img');
-            fullScreenImage.src = '114514.jpg';
-            fullScreenImage.style.position = 'fixed';
-            fullScreenImage.style.top = '0';
-            fullScreenImage.style.left = '0';
-            fullScreenImage.style.width = '100%';
-            fullScreenImage.style.height = '100%';
-            fullScreenImage.style.zIndex = '1000';
-            document.body.appendChild(fullScreenImage);
-            
-            setTimeout(() => {
-                fullScreenImage.remove();
-            }, 1000);
-            imgCount++;
-        } else {
-            clearInterval(showImageInterval);
-        }
-    }, 200);
+ // スタート画面を表示
+    document.getElementById('startScreen').style.display = 'block'; 
+    document.getElementById('startSound').play(); // スタートサウンドの再生
 
-    setTimeout(() => {
-        curtain.remove();
-        document.getElementById('startScreen').style.display = 'block';
-    }, 500);
-});
+};
 
 document.getElementById('startButton').onclick = () => {
+
     const startScreen = document.getElementById('startScreen');
     const curtain = document.createElement('div');
     curtain.classList.add('curtain');
@@ -106,7 +80,7 @@ function loadQuestion() {
         answerButton.textContent = answer;
         answerButton.classList.add('answer');
         answerButton.onclick = () => selectAnswer(index);
-        
+
         answerButton.onmouseenter = () => {
             document.getElementById('hoverSound').play();
             answerButton.classList.add('hover');
@@ -154,13 +128,13 @@ function selectAnswer(index) {
 
 document.getElementById('next').onclick = () => {
     const currentQuestion = quizData[currentQuestionIndex];
-    
+
     if (document.querySelectorAll('.answer.wrong').length > 0) {
         // 間違えた場合の処理
         const curtain = document.createElement('div');
         curtain.classList.add('curtain');
         document.body.appendChild(curtain);
-        
+
         document.getElementById('finalSound').play();
         const fullScreenImage = document.createElement('img');
         fullScreenImage.src = '114514.jpg';
@@ -189,7 +163,7 @@ document.getElementById('next').onclick = () => {
         const curtain = document.createElement('div');
         curtain.classList.add('curtain');
         document.body.appendChild(curtain);
-        
+
         curtain.classList.add('curtainUp');
         setTimeout(() => {
             curtain.remove();
@@ -201,25 +175,18 @@ document.getElementById('next').onclick = () => {
             }
         }, 500);
     }
-}
+};
 
 function showScore() {
-    const quizContainer = document.getElementById('quiz');
-    quizContainer.innerHTML = '';
-    document.getElementById('next').style.display = 'none';
-    document.getElementById('title').style.display = 'none';
-
-    const scoreMessage = score === quizData.length ? "満点おめでとう！" : "よくがんばりました！";
-    const scoreElement = document.createElement('h2');
-    scoreElement.className = 'score slide-in';
-    scoreElement.innerHTML = `<span class="pop-up">${scoreMessage}</span><br>あなたのスコア: ${score}/${quizData.length}`;
-    quizContainer.appendChild(scoreElement);
+    // スコアが満点の場合にindex2.htmlにリダイレクト
+    if (score === quizData.length) {
+        setTimeout(() => {
+            window.location.href = 'index2.html';
+        }, 100); // 0.1秒後に遷移
+    }
 }
 
 window.addEventListener('beforeunload', (event) => {
     event.preventDefault(); // 標準の動作を防ぐ
-    event.returnValue = "何で消そうとするの❓嫌いなの❓"; // 警告メッセージを設定
+
 });
-
-
-
