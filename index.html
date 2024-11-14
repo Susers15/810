@@ -6,19 +6,9 @@
     <title>オナチンコ‼️！</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="./manifest.json">
-    <link rel="icon" href="favicon.png" type="image/png">
+
+      
 </head>
-    <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-      navigator.serviceWorker.register('/color-name/sw.js').then(function(registration) {
-        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      }, function(err) {
-        console.log('ServiceWorker registration failed: ', err);
-      });
-    });
-  }
-</script>
 <body>
 <script>    window.addEventListener('beforeunload', (event) => {
     event.preventDefault(); 
@@ -58,53 +48,19 @@
         ];
 
         let currentQuestionIndex = 0;
-        let score = 0;
+let score = 0;
+let clickCount = 0; // クリック回数
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const curtain = document.createElement('div');
-            curtain.classList.add('curtain');
-            document.body.appendChild(curtain);
+document.addEventListener('DOMContentLoaded', () => {
+    const curtain = document.createElement('div');
+    curtain.classList.add('curtain');
+    document.body.appendChild(curtain);
 
-            document.getElementById('startSound').play();
-
-            let imgCount = 0;
-            const showImageInterval = setInterval(() => {
-                if (imgCount < 5) {
-                    const fullScreenImage = document.createElement('img');
-                    fullScreenImage.src = '114514.jpg';
-                    fullScreenImage.style.position = 'fixed';
-                    fullScreenImage.style.top = '0';
-                    fullScreenImage.style.left = '0';
-                    fullScreenImage.style.width = '100%';
-                    fullScreenImage.style.height = '100%';
-                    fullScreenImage.style.zIndex = '1000';
-                    document.body.appendChild(fullScreenImage);
-
-                     // ページが開いたときに810.wavを再生
     document.getElementById('startSound').play();
-                    
-                    setTimeout(() => {
-                        fullScreenImage.remove();
-                    }, 1000);
-                    imgCount++;
-                } else {
-                    clearInterval(showImageInterval);
-                }
-            }, 200);
 
-            setTimeout(() => {
-                curtain.remove();
-                document.getElementById('startScreen').style.display = 'block';
-            }, 500);
-        });
-
-        document.getElementById('startButton').onclick = () => {
-            const startScreen = document.getElementById('startScreen');
-            const curtain = document.createElement('div');
-            curtain.classList.add('curtain');
-            document.body.appendChild(curtain);
-
-            document.getElementById('finalSound').play();
+    let imgCount = 0;
+    const showImageInterval = setInterval(() => {
+        if (imgCount < 5) {
             const fullScreenImage = document.createElement('img');
             fullScreenImage.src = '114514.jpg';
             fullScreenImage.style.position = 'fixed';
@@ -117,181 +73,242 @@
 
             setTimeout(() => {
                 fullScreenImage.remove();
-                setTimeout(() => {
-                    startScreen.style.display = 'none';
-                    curtain.classList.add('curtainUp');
-                    setTimeout(() => {
-                        document.getElementById('quiz').style.display = 'block';
-                        loadQuestion();
-                        curtain.remove();
-                    }, 500);
-                }, 1000);
-            }, 0);
-        };
+            }, 1000);
+            imgCount++;
+        } else {
+            clearInterval(showImageInterval);
+        }
+    }, 200);
 
-        function loadQuestion() {
-            const quizContainer = document.getElementById('quiz');
-            quizContainer.innerHTML = '';
+    setTimeout(() => {
+        curtain.remove();
+        document.getElementById('startScreen').style.display = 'block';
+    }, 500);
 
-            const currentQuestion = quizData[currentQuestionIndex];
+    // 8秒後にstop.mp3を再生
+    setTimeout(() => {
+        const stopAudio = new Audio('stop.mp3');
+        stopAudio.play();
 
-            const questionElement = document.createElement('h2');
-            questionElement.classList.add('question', 'fade-in');
-            questionElement.textContent = currentQuestion.question;
-            quizContainer.appendChild(questionElement);
+        stopAudio.onended = () => {
+            // stop.mp3が終わったら画像と音声を再生
+            const image = document.createElement('img');
+            image.src = '8101919.png';
+            image.style.position = 'fixed';
+            image.style.top = '0';
+            image.style.left = '0';
+            image.style.width = '100%';
+            image.style.height = '100%';
+            image.style.zIndex = '1000';
+            document.body.appendChild(image);
 
-            const answersContainer = document.createElement('div');
-            answersContainer.classList.add('answers');
-
-            currentQuestion.answers.forEach((answer, index) => {
-                const answerButton = document.createElement('div');
-                answerButton.textContent = answer;
-                answerButton.classList.add('answer');
-                answerButton.onclick = () => selectAnswer(index);
-                
-                answerButton.onmouseenter = () => {
-                    document.getElementById('hoverSound').play();
-                    answerButton.classList.add('hover');
-                };
-                answerButton.onmouseleave = () => {
-                    answerButton.classList.remove('hover');
-                };
-
-                answersContainer.appendChild(answerButton);
-            });
-
-            quizContainer.appendChild(answersContainer);
+            const audio = new Audio('810yaju.mp3');
+            audio.play();
 
             setTimeout(() => {
-                questionElement.classList.add('show');
-            }, 10);
+                image.remove();
+                audio.pause();
+            }, 15000);  // 15秒後に画像と音声を停止
+        };
+    }, 8000);  // 8秒後にstop.mp3を再生
+
+
+    image.onclick = () => {
+        const kowAudio = new Audio('kow.mp3');
+        kowAudio.play();
+        clickCount++;
+
+    };
+
+});
+
+document.getElementById('startButton').onclick = () => {
+    const startScreen = document.getElementById('startScreen');
+    const curtain = document.createElement('div');
+    curtain.classList.add('curtain');
+    document.body.appendChild(curtain);
+
+    document.getElementById('finalSound').play();
+    const fullScreenImage = document.createElement('img');
+    fullScreenImage.src = '114514.jpg';
+    fullScreenImage.style.position = 'fixed';
+    fullScreenImage.style.top = '0';
+    fullScreenImage.style.left = '0';
+    fullScreenImage.style.width = '100%';
+    fullScreenImage.style.height = '100%';
+    fullScreenImage.style.zIndex = '1000';
+    document.body.appendChild(fullScreenImage);
+
+    setTimeout(() => {
+        fullScreenImage.remove();
+        setTimeout(() => {
+            startScreen.style.display = 'none';
+            curtain.classList.add('curtainUp');
+            setTimeout(() => {
+                document.getElementById('quiz').style.display = 'block';
+                loadQuestion();
+                curtain.remove();
+            }, 500);
+        }, 1000);
+    }, 0);
+};
+
+function loadQuestion() {
+    const quizContainer = document.getElementById('quiz');
+    quizContainer.innerHTML = '';
+
+    const currentQuestion = quizData[currentQuestionIndex];
+
+    const questionElement = document.createElement('h2');
+    questionElement.classList.add('question', 'fade-in');
+    questionElement.textContent = currentQuestion.question;
+    quizContainer.appendChild(questionElement);
+
+    const answersContainer = document.createElement('div');
+    answersContainer.classList.add('answers');
+
+    currentQuestion.answers.forEach((answer, index) => {
+        const answerButton = document.createElement('div');
+        answerButton.textContent = answer;
+        answerButton.classList.add('answer');
+        answerButton.onclick = () => selectAnswer(index);
+
+        answerButton.onmouseenter = () => {
+            document.getElementById('hoverSound').play();
+            answerButton.classList.add('hover');
+        };
+        answerButton.onmouseleave = () => {
+            answerButton.classList.remove('hover');
+        };
+
+        answersContainer.appendChild(answerButton);
+    });
+
+    quizContainer.appendChild(answersContainer);
+
+    setTimeout(() => {
+        questionElement.classList.add('show');
+    }, 10);
+}
+
+function selectAnswer(index) {
+    const currentQuestion = quizData[currentQuestionIndex];
+    const answerElements = document.querySelectorAll('.answer');
+
+    answerElements.forEach((element, i) => {
+        if (i === currentQuestion.correct) {
+            element.classList.add('correct');
+        } else {
+            element.classList.add('wrong');
+            element.style.animation = 'shake 0.7s';
         }
+        element.onclick = null;
+    });
 
-        function selectAnswer(index) {
-            const currentQuestion = quizData[currentQuestionIndex];
-            const answerElements = document.querySelectorAll('.answer');
+    if (index === currentQuestion.correct) {
+        score++;
+        document.getElementById('correctSound').play();
+    } else {
+        document.getElementById('wrongSound').play();
 
-            answerElements.forEach((element, i) => {
-                if (i === currentQuestion.correct) {
-                    element.classList.add('correct');
-                } else {
-                    element.classList.add('wrong');
-                    element.style.animation = 'shake 0.7s';
-                }
-                element.onclick = null;
-            });
+        // 不正解の場合の処理
+        const fullScreenImage = document.createElement('img');
+        fullScreenImage.src = '114514.jpg';
+        fullScreenImage.style.position = 'fixed';
+        fullScreenImage.style.top = '0';
+        fullScreenImage.style.left = '0';
+        fullScreenImage.style.width = '100%';
+        fullScreenImage.style.height = '100%';
+        fullScreenImage.style.zIndex = '1000';
+        document.body.appendChild(fullScreenImage);
 
-            if (index === currentQuestion.correct) {
-                score++;
-                document.getElementById('correctSound').play();
-            } else {
-                document.getElementById('wrongSound').play();
-                
-                // 不正解の場合の処理
-                const fullScreenImage = document.createElement('img');
-                fullScreenImage.src = '114514.jpg';
-                fullScreenImage.style.position = 'fixed';
-                fullScreenImage.style.top = '0';
-                fullScreenImage.style.left = '0';
-                fullScreenImage.style.width = '100%';
-                fullScreenImage.style.height = '100%';
-                fullScreenImage.style.zIndex = '1000';
-                document.body.appendChild(fullScreenImage);
+        // 画像をクリックした時の処理
+        fullScreenImage.onclick = () => {
+            fullScreenImage.remove();
+            document.getElementById('finalSound').play();
+        };
 
-                // 画像をクリックした時の処理
-                fullScreenImage.onclick = () => {
-                    fullScreenImage.remove();
-                    document.getElementById('finalSound').play();
-                };
+        setTimeout(() => {
+            fullScreenImage.remove();
+        }, 3000);
+    }
 
-                setTimeout(() => {
-                    fullScreenImage.remove();
-                }, 3000);
-            }
+    document.getElementById('next').style.display = 'block';
+}
 
-            document.getElementById('next').style.display = 'block';
-        }
+document.getElementById('next').onclick = () => {
+    if (currentQuestionIndex < quizData.length - 1) {
+        currentQuestionIndex++;
+        const curtain = document.createElement('div');
+        curtain.classList.add('curtain');
+        document.body.appendChild(curtain);
 
-        document.getElementById('next').onclick = () => {
-            if (currentQuestionIndex < quizData.length - 1) {
-                currentQuestionIndex++;
-                const curtain = document.createElement('div');
-                curtain.classList.add('curtain');
-                document.body.appendChild(curtain);
-                
-                curtain.classList.add('curtainUp');
-                setTimeout(() => {
-                    curtain.remove();
-                    loadQuestion();
-                    document.getElementById('next').style.display = 'none';
-                }, 500);
-            } else {
-                showScore();
-            }
-        }
-
-        function showScore() {
-            const quizContainer = document.getElementById('quiz');
-            quizContainer.innerHTML = '';
+        curtain.classList.add('curtainUp');
+        setTimeout(() => {
+            curtain.remove();
+            loadQuestion();
             document.getElementById('next').style.display = 'none';
-            document.getElementById('title').style.display = 'none';
+        }, 500);
+    } else {
+        showScore();
+    }
+}
 
-            const scoreMessage = score === quizData.length ? "満点おめでとう！" : "よくがんばりました！";
-            const scoreElement = document.createElement('h2');
-            scoreElement.className = 'score-message';
-            scoreElement.textContent = scoreMessage;
+function showScore() {
+    const quizContainer = document.getElementById('quiz');
+    quizContainer.innerHTML = '';
+    document.getElementById('next').style.display = 'none';
+    document.getElementById('title').style.display = 'none';
 
-            const scoreValue = document.createElement('h1');
-            scoreValue.className = 'score-value';
-            scoreValue.textContent = `あなたのスコアは ${score} 点 です！`;
+    const scoreMessage = score === quizData.length ? "やりますねぇ‼️" : "よくがんばりました！";
+    const scoreElement = document.createElement('h2');
+    scoreElement.className = 'score-message';
+    scoreElement.textContent = scoreMessage;
 
-            quizContainer.appendChild(scoreElement);
-            quizContainer.appendChild(scoreValue);
+    const scoreValue = document.createElement('h1');
+    scoreValue.className = 'score-value';
+    scoreValue.textContent = `あなたのスコアは ${score} 点 です！`;
 
-            // 満点の場合の処理
-            if (score === quizData.length) {
-                document.getElementById('finalPerfectSound').play();
-            } else {
-                const fullScreenImage = document.createElement('img');
-                fullScreenImage.src = 'your-image.jpg'; // ここは変更なし
-                fullScreenImage.style.position = 'fixed';
-                fullScreenImage.style.top = '0';
-                fullScreenImage.style.left = '0';
-                fullScreenImage.style.width = '100%';
-                fullScreenImage.style.height = '100%';
-                fullScreenImage.style.zIndex = '1000';
-                document.body.appendChild(fullScreenImage);
+    quizContainer.appendChild(scoreElement);
+    quizContainer.appendChild(scoreValue);
 
-                // 画像をクリックした時の処理
-                fullScreenImage.onclick = () => {
-                    fullScreenImage.style.display = 'none'; // 一旦非表示にする
+    // 満点の場合の処理
+    if (score === quizData.length) {
+        document.getElementById('finalPerfectSound').play();
+    } else {
+        const fullScreenImage = document.createElement('img');
+        fullScreenImage.src = 'your-image.jpg'; // ここは変更なし
+        fullScreenImage.style.position = 'fixed';
+        fullScreenImage.style.top = '0';
+        fullScreenImage.style.left = '0';
+        fullScreenImage.style.width = '100%';
+        fullScreenImage.style.height = '100%';
+        fullScreenImage.style.zIndex = '1000';
+        document.body.appendChild(fullScreenImage);
 
-                    // すぐに再表示
-                    setTimeout(() => {
-                        fullScreenImage.style.display = 'block'; // 再表示
-                    }, 100); // 100ミリ秒後に表示
+        // 画像をクリックした時の処理
+        fullScreenImage.onclick = () => {
+            fullScreenImage.style.display = 'none'; // 一旦非表示にする
 
-                    document.getElementById('finalSound').play(); // mac.wav を繰り返し再生
-                };
+            // すぐに再表示
+            setTimeout(() => {
+                fullScreenImage.style.display = 'block'; // 再表示
+            }, 100); // 100ミリ秒後に表示
 
-                // mac.wav を繰り返し再生
-                const macSound = document.getElementById('finalSound');
-                macSound.src = 'mac.wav'; // 音声ファイル名を変更
-                macSound.loop = true; // ループ設定
-                macSound.play();
+            document.getElementById('finalSound').play(); // mac.wav を繰り返し再生
+        };
 
-                // 画像は何度も表示可能
-                fullScreenImage.style.cursor = 'pointer'; // クリック可能なカーソルを表示
-            }
-        }
-        
-        
-    // 既存のコード...
+        // mac.wav を繰り返し再生
+        const macSound = document.getElementById('finalSound');
+        macSound.src = 'mac.wav'; // 音声ファイル名を変更
+        macSound.loop = true; // ループ設定
+        macSound.play();
 
+        // 画像は何度も表示可能
+        fullScreenImage.style.cursor = 'pointer'; // クリック可能なカーソルを表示
+    }
+}
 
-
-    // 残りの既存のコード...
-</script>
 
     </script>
 </body>
